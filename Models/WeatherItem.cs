@@ -124,7 +124,7 @@ public class WeatherItem : IModel
 
         // #format temps for display
         var feelslike = jsonWeatherData["current"]["feels_like"];
-        this.CurrentFeelsLike = (int)Math.Round(feelslike.Value, 0);
+        this.CurrentFeelsLike = (int)Math.Round((decimal)feelslike.Value, 0);
 
         this.TodayMinTemp = (int)jsonWeatherData["daily"][0]["temp"]["min"];
         this.TodayMaxTemp = (int)jsonWeatherData["daily"][0]["temp"]["max"];
