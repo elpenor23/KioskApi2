@@ -9,4 +9,4 @@ chmod 777 kiosk_api_image.tar
 docker load -i .\kiosk_api_image.tar
 
 #RUN IT
-docker run -d -p 8080:8080 kioskapi2
+docker run --restart unless-stopped  -d -p 8080:8080 kioskapi2
