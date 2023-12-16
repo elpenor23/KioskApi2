@@ -1,0 +1,12 @@
+#CREATE THE DOCKER IMAGE
+docker build -t kioskapi2 .
+
+#SAVE IT TO A TAR FILE
+docker save kioskapi2:latest -o kiosk_api_image.tar
+chmod 777 kiosk_api_image.tar
+
+#LOAD THE DOCKER IMAGE
+docker load -i .\kiosk_api_image.tar
+
+#RUN IT
+docker run -d -p 8080:8080 kioskapi2
