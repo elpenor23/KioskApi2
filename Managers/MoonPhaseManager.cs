@@ -11,7 +11,7 @@ public class MoonPhaseManager(IConfiguration configuration)
         var weather = await weatherManager.GetWeather(lat, lon);
 
         //check for nulls so it stops warning me
-        if (weather.MoonPhase == null || weather.SunriseTime == null || weather.SunsetTime == null) { return new MoonData(4, "Full Moon", "full-moon", "24 Hours"); }
+        if (weather.MoonPhase == null || weather.SunriseTime == null || weather.SunsetTime == null) { return new MoonData(4, "Full Moon", "full-moon", "24 Hours", DateTime.Now, DateTime.Now); }
 
         var moonItem = GetMoonData(weather.MoonPhase.Value, weather.SunriseTime.Value, weather.SunsetTime.Value);
 
@@ -24,7 +24,7 @@ public class MoonPhaseManager(IConfiguration configuration)
         var data = GetPhaseData(index);
         var dayLength = GetDayLength(sunrise, sunset);
 
-        return new MoonData(index, data.Item1, data.Item2, dayLength);
+        return new MoonData(index, data.Item1, data.Item2, dayLength, sunrise, sunset);
     }
 
     private static int GetPhaseIndex(decimal moonPhase)
