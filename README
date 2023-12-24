@@ -1,12 +1,36 @@
+#On Build/Server
+# - Stop and set Docker Engine service to manual
+# - reboot computer
+# - open Docker Desktop as administrator
+
+# - in Command Prompt running as admin run the following
 #CREATE THE DOCKER IMAGE
 docker build -t kioskapi2 .
 
 #SAVE IT TO A TAR FILE
 docker save kioskapi2:latest -o kiosk_api_image.tar
-chmod 777 kiosk_api_image.tar
+
+# - delete all the images and containers in Docker Desktop
+# - Quit Docker Desktop
+# - stop both docker services
+# - set Docker Desktop Service to manual
+# - install dockerd as service with
+
+"C:\Program Files\Docker\Docker\resources\dockerd" --register-service
+
+# - if necessary set the Docker Engine service to automatic
+# - Update C:\ProgramData\docker\config\daemon.json
+#    - Remove: "hosts": [
+#                  "npipe:////./pipe/docker_engine_windows"
+#            ]
+
+# - reboot computer
+
+#  - open Power Shell as administrator
+# - Run the following
 
 #LOAD THE DOCKER IMAGE
-docker load -i .\kiosk_api_image.tar
+docker load -i C:\Users\Eric\Documents\KioskApi2\kiosk_api_image.tar\kiosk_api_image.tar
 
 #RUN IT
 docker run --restart unless-stopped  -d -p 8080:8080 kioskapi2
