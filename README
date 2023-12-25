@@ -3,12 +3,12 @@
 # - reboot computer
 # - open Docker Desktop as administrator
 
-# - in Command Prompt running as admin run the following
+# - open Command Prompt running as admin run the following
 #CREATE THE DOCKER IMAGE
-docker build -t kioskapi2 .
+docker build -t kioskapi2 C:\Users\Eric\Documents\KioskApi2\.
 
 #SAVE IT TO A TAR FILE
-docker save kioskapi2:latest -o kiosk_api_image.tar
+docker save kioskapi2:latest -o C:\Users\Eric\Documents\KioskApi2\kiosk_api_image.tar
 
 # - delete all the images and containers in Docker Desktop
 # - Quit Docker Desktop
@@ -30,7 +30,7 @@ docker save kioskapi2:latest -o kiosk_api_image.tar
 # - Run the following
 
 #LOAD THE DOCKER IMAGE
-docker load -i C:\Users\Eric\Documents\KioskApi2\kiosk_api_image.tar\kiosk_api_image.tar
+docker load -i C:\Users\Eric\Documents\KioskApi2\kiosk_api_image.tar
 
 #RUN IT
 docker run --restart unless-stopped  -d -p 8080:8080 kioskapi2

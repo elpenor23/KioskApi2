@@ -2,6 +2,7 @@ namespace KioskApi.Models;
 
 public class MoonData
 {
+    private const string TIME_FORMAT = "h:mm tt";
     public MoonData(){}
     public MoonData(int index, string name, string icon, string length, DateTime? sunrise, DateTime sunset)
     {
@@ -22,7 +23,7 @@ public class MoonData
     {
         get
         {
-            return SunriseTime?.ToString("h:mm") + " - " + SunsetTime?.ToString("h:mm");
+            return SunriseTime?.ToString(TIME_FORMAT) + " - " + SunsetTime?.ToString(TIME_FORMAT);
         }
     } 
 }
