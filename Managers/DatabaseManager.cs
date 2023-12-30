@@ -70,6 +70,7 @@ public class DatabaseManager
         
         if (!tablesExist)
         {
+            Console.WriteLine("*****Initializing TABLES!!");
             await database.CreateTableAsync<WeatherItem>();
             await database.CreateTableAsync<IndoorStatusData>();
             await database.CreateTableAsync<MoonData>();
@@ -82,8 +83,8 @@ public class DatabaseManager
     {
         try
         {
-            var results = await database.QueryAsync<int>($"SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND (name='WeatherItem' OR name='IndoorStatusData' OR name='MoonData')");
-            return results.FirstOrDefault() == 3;
+            var results = await database.QueryAsync<int>($"SELECT * FROM sqlite_master WHERE type='table' AND (name='WeatherItem' OR name='IndoorStatusData' OR name='MoonData')");
+            return results.Count == 3;
         }
         catch(Exception ex)
         {
