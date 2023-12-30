@@ -70,7 +70,6 @@ public class DatabaseManager
         
         if (!tablesExist)
         {
-            Console.WriteLine("*****Initializing TABLES!!");
             await database.CreateTableAsync<WeatherItem>();
             await database.CreateTableAsync<IndoorStatusData>();
             await database.CreateTableAsync<MoonData>();

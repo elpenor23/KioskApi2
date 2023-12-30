@@ -62,10 +62,6 @@ public class MoonPhaseManager(IConfiguration configuration)
         {
             index = 7;
         }
-        else
-        {
-            index = 0;
-        }
 
         return index;
     }
@@ -116,7 +112,7 @@ public class MoonPhaseManager(IConfiguration configuration)
 
     private static string GetDayLength(DateTime sunrise, DateTime sunset)
     {
-        TimeSpan span = (sunset - sunrise);
+        TimeSpan span = sunset - sunrise;
         return String.Format("{0} hours, {1} minutes", span.Hours, span.Minutes);
     }
 }
