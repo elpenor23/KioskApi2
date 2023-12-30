@@ -13,12 +13,14 @@ docker save kioskapi2:latest -o C:\Users\Eric\Documents\KioskApi2\kiosk_api_imag
 # - delete all the images and containers in Docker Desktop
 # - Quit Docker Desktop
 # - stop both docker services
-# - set Docker Desktop Service to manual
-# - install dockerd as service with
 
+#In Powershell running in admin mode:
+Set-Service -Name "com.docker.service" -Status running -StartupType manual
+Stop-Service -Name "com.docker.service"
+
+# - install dockerd as service with (in command prompt running as admin):
 "C:\Program Files\Docker\Docker\resources\dockerd" --register-service
 
-# - if necessary set the Docker Engine service to automatic
 # - Update C:\ProgramData\docker\config\daemon.json
 #    - Remove: "hosts": [
 #                  "npipe:////./pipe/docker_engine_windows"
