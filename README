@@ -18,7 +18,7 @@ docker save kioskapi2:latest -o C:\Users\Eric\Documents\KioskApi2\kiosk_api_imag
 Set-Service -Name "com.docker.service" -Status running -StartupType manual
 Stop-Service -Name "com.docker.service"
 
-# - install dockerd as service with:
+# - install dockerd as service with (in command prompt running as admin):
 "C:\Program Files\Docker\Docker\resources\dockerd" --register-service
 
 # - Update C:\ProgramData\docker\config\daemon.json
