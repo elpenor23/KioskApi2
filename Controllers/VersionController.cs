@@ -10,7 +10,7 @@ public class VersionController : ControllerBase
     public async Task<ActionResult<Version>> Get()
     {        
         var v = new Version();
-        v.version = "v1.0";
+        v.version = "v1.1";
 
         return Ok(v);
     }
