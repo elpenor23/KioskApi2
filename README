@@ -21,7 +21,6 @@ Stop-Service -Name "com.docker.service"
 # - install dockerd as service with:
 "C:\Program Files\Docker\Docker\resources\dockerd" --register-service
 
-# - if necessary set the Docker Engine service to automatic
 # - Update C:\ProgramData\docker\config\daemon.json
 #    - Remove: "hosts": [
 #                  "npipe:////./pipe/docker_engine_windows"
