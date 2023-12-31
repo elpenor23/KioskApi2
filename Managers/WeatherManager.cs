@@ -20,7 +20,12 @@ public class WeatherManager(IConfiguration configuration)
         lat = Math.Round(lat, 4, MidpointRounding.ToZero);
         lon = Math.Round(lon, 4, MidpointRounding.ToZero);
 
-        DateTime threeMinutesAgo = DateTime.Now.AddMinutes(-3);
+        if (!double.TryParse(Configuration["WeatherApi:weather_data_cache_time_minutes"], out double cache_time))
+        {
+            cache_time = -3;
+        }
+
+        DateTime threeMinutesAgo = DateTime.Now.AddMinutes(cache_time);
         WeatherItem ReturnData = new WeatherItem();
         await Dbm.InitializeDatabase();
         var weatherData = await Dbm.GetWeatherData(100);
