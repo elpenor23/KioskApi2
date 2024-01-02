@@ -22,7 +22,7 @@ public class SolarManager(IConfiguration configuration)
 
         var xMinutesAgo = DateTime.Now.AddMinutes(cache_time);
 
-        if (true || data == null || data.CacheLastUpdated < xMinutesAgo){
+        if (data == null || data.CacheLastUpdated < xMinutesAgo){
             data = await GetSolarDataFromApi();
             SaveSolarData(data);
         }
