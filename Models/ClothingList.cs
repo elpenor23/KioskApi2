@@ -1,4 +1,4 @@
-namespace KioskApi.Models;
+namespace KioskApi2.Models;
 
 public class ClothingList : IModel
 {

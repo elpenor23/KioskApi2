@@ -1,7 +1,11 @@
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Not sure if this is the best way to do this.
+// But this ensures that we have a place for things that need to run on startup
+// to initilze things like databases and stuff like that.
+await KioskApi2.Managers.StartUpManager.Startup(builder.Configuration);
 
+// Add services to the container.
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

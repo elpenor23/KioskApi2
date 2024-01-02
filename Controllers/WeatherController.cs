@@ -1,13 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
-using KioskApi.Models;
-using KioskApi.Managers;
+using KioskApi2.Models;
+using KioskApi2.Managers;
 using System.Web.Http;
 using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 using System.Net;
 using System.Net.Http;
 
-namespace KioskApi.Controllers;
+namespace KioskApi2.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

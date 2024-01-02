@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using KioskApi.Models;
-using KioskApi.Managers;
+using KioskApi2.Models;
+using KioskApi2.Managers;
 
-namespace KioskApi.Controllers;
+namespace KioskApi2.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

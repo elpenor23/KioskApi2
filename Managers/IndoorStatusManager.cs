@@ -1,5 +1,5 @@
-using KioskApi.Models;
-namespace KioskApi.Managers;
+using KioskApi2.Models;
+namespace KioskApi2.Managers;
 public class IndoorStatusManager(IConfiguration configuration)
 {
     private readonly DatabaseManager dbm = new(configuration);

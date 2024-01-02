@@ -1,6 +1,6 @@
-using KioskApi.Models;
+using KioskApi2.Models;
 
-namespace KioskApi.Managers;
+namespace KioskApi2.Managers;
 public class MoonPhaseManager(IConfiguration configuration)
 {
     private IConfiguration Configuration { get; } = configuration;

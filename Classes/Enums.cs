@@ -1,4 +1,4 @@
-namespace KioskApi.Enums;
+namespace KioskApi2.Enums;
 
 public enum TimeOfDay {
     Dawn,

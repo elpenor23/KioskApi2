@@ -1,4 +1,6 @@
-namespace KioskApi;
+using System.Net.Http.Headers;
+
+namespace KioskApi2.Utilities;
 public static class Arrays
 {
     public static bool AreAllTheSameLength(params Array[] arrays)
@@ -8,11 +10,29 @@ public static class Arrays
     
 }
 
-// public static class Utilities
-// {
-//     public static bool IsBetween<T>(this T item, T start, T end)
-//     {
-//         return Comparer<T>.Default.Compare(item, start) >= 0
-//             && Comparer<T>.Default.Compare(item, end) <= 0;
-//     }
-// }
+public static class ApiUtils{
+    public async static Task<string> GetApiJsonData(string uri){
+        var result = "[{}]";
+
+        using (var client = new HttpClient())
+        {
+            client.BaseAddress = new Uri(uri);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = await client.GetAsync(uri);
+
+            if (response.IsSuccessStatusCode)
+            {
+                result = await response.Content.ReadAsStringAsync();
+            }
+            else
+            {
+                var errorMessage = string.Format($"Error Getting data from {uri}. Status Code: {response.StatusCode}");
+                throw new Exception(errorMessage);
+            }
+        }
+
+        return result;
+    }
+}

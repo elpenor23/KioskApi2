@@ -1,7 +1,7 @@
-using System.Net.Http.Headers;
-using KioskApi.Models;
+using KioskApi2.Utilities;
+using KioskApi2.Models;
 
-namespace KioskApi.Managers;
+namespace KioskApi2.Managers;
 public class WeatherManager(IConfiguration configuration)
 {
     private DatabaseManager dbm = new(configuration);
@@ -29,7 +29,6 @@ public class WeatherManager(IConfiguration configuration)
         var xMinutesAgo = DateTime.Now.AddMinutes(cache_time);
         
         WeatherItem ReturnData = new WeatherItem();
-        await Dbm.InitializeDatabase();
         var weatherData = await Dbm.GetWeatherData(100);
 
         //get cached data
@@ -56,7 +55,6 @@ public class WeatherManager(IConfiguration configuration)
     #region "Open Weather API Access"
     private async Task<string> GetRawWeatherAsync(decimal lat, decimal lon)
     {
-        var result = "[{}]";
         var uri = String.Format(Configuration["WeatherApi:weather_req_url"] ?? string.Empty,
                 Configuration["WeatherApi:weather_api_token"],
                 lat,
@@ -65,24 +63,7 @@ public class WeatherManager(IConfiguration configuration)
                 Configuration["WeatherApi:weather_unit"],
                 Configuration["WeatherApi:weather_exclude_list"]);
 
-        using (var client = new HttpClient())
-        {
-            client.BaseAddress = new Uri(uri);
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            HttpResponseMessage response = await client.GetAsync(uri);
-
-            if (response.IsSuccessStatusCode)
-            {
-                result = await response.Content.ReadAsStringAsync();
-            }
-            else
-            {
-                var errorMessage = string.Format($"Error Getting data from {uri}. Status Code: {response.StatusCode}");
-                throw new Exception(errorMessage);
-            }
-        }
+        var result = await ApiUtils.GetApiJsonData(uri);
 
         return result;
     }

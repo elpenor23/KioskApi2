@@ -1,6 +1,6 @@
-using KioskApi.Enums;
+using KioskApi2.Enums;
 
-namespace KioskApi.Models;
+namespace KioskApi2.Models;
 
 public class IntensityClothing
 {

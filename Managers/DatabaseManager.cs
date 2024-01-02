@@ -1,16 +1,17 @@
 
-using KioskApi.Models;
+using KioskApi2.Models;
 using SQLite;
 
-namespace KioskApi.Managers;
+namespace KioskApi2.Managers;
 public class DatabaseManager
-{    
+{
     #region "Database Access"
     readonly string databaseId;
-    public IConfiguration Configuration{get;}
+    public IConfiguration Configuration { get; }
     private readonly SQLiteAsyncConnection database;
 
-    public DatabaseManager(IConfiguration configuration){
+    public DatabaseManager(IConfiguration configuration)
+    {
         Configuration = configuration;
         databaseId = Configuration["DatabaseId"] ?? "CachedData";
         database = new SQLiteAsyncConnection(databaseId);
@@ -18,32 +19,31 @@ public class DatabaseManager
 
     public async Task<IEnumerable<WeatherItem>> GetWeatherData(int maxResults)
     {
-        try
-        {
-            var results = await database.QueryAsync<WeatherItem>($"SELECT * FROM WeatherItem");
+        var results = await AsyncTableQuery<WeatherItem>.RunSelectQuery(
+            database,
+            $"SELECT * FROM WeatherItem");
 
-            return results;
-        }
-        catch(Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-            throw;
-        }
+        return results;
+
     }
 
     public async Task<IEnumerable<IndoorStatusData>> GetIndoorStatusData()
     {
-        try
-        {
-            var results = await database.QueryAsync<IndoorStatusData>($"SELECT * FROM IndoorStatusData");
+        var results = await AsyncTableQuery<IndoorStatusData>.RunSelectQuery(
+            database,
+            $"SELECT * FROM IndoorStatusData");
 
-            return results;
-        }
-        catch(Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-            throw;
-        }
+        return results;
+
+    }
+
+    public async Task<IEnumerable<SolarData>> GetSolarData()
+    {
+        var results = await AsyncTableQuery<SolarData>.RunSelectQuery(
+            database,
+            $"SELECT * FROM SolarData");
+
+        return results;
     }
 
     public async void AddUpdateData<T>(T data)
@@ -55,7 +55,7 @@ public class DatabaseManager
                 tran.InsertOrReplace(data);
             });
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.WriteLine(ex.Message);
             throw;
@@ -63,29 +63,19 @@ public class DatabaseManager
     }
 
     #endregion
+}
 
-    public async Task InitializeDatabase()
-    {
-        var tablesExist = await TablesExist();
-        
-        if (!tablesExist)
-        {
-            await database.CreateTableAsync<WeatherItem>();
-            await database.CreateTableAsync<IndoorStatusData>();
-            await database.CreateTableAsync<MoonData>();
-        }
-
-        return;
-    }
-
-    private async Task<bool> TablesExist()
+public static class AsyncTableQuery<T> where T : new()
+{
+    public static async Task<List<T>> RunSelectQuery(SQLiteAsyncConnection database, string query)
     {
         try
         {
-            var results = await database.QueryAsync<int>($"SELECT * FROM sqlite_master WHERE type='table' AND (name='WeatherItem' OR name='IndoorStatusData' OR name='MoonData')");
-            return results.Count == 3;
+            var results = await database.QueryAsync<T>(query);
+
+            return results;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.WriteLine(ex.Message);
             throw;

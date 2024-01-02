@@ -1,5 +1,5 @@
-using KioskApi.Enums;
-namespace KioskApi.Models;
+using KioskApi2.Enums;
+namespace KioskApi2.Models;
 
 public class Person
 {

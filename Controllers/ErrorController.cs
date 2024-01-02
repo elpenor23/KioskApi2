@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace KioskApi.Controllers;
+namespace KioskApi2.Controllers;
 
 [Route("error/[controller]")]
 [ApiController]

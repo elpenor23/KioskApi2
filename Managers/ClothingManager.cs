@@ -1,7 +1,8 @@
-using KioskApi.Models;
-using KioskApi.Enums;
+using KioskApi2.Models;
+using KioskApi2.Enums;
+using KioskApi2.Utilities;
 
-namespace KioskApi.Managers;
+namespace KioskApi2.Managers;
 public class ClothingManager(IConfiguration configuration)
 {
     private readonly IConfiguration Configuration = configuration;
