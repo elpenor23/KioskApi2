@@ -1,3 +1,5 @@
+var AllowAllCORS = "_MyAllowAllCORS";
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Not sure if this is the best way to do this.
@@ -7,7 +9,7 @@ await KioskApi2.Managers.StartUpManager.Startup(builder.Configuration);
 
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(
+    options.AddPolicy(name: AllowAllCORS,
         policy =>
         {
             policy.AllowAnyOrigin().AllowAnyMethod();
@@ -22,7 +24,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod());
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -32,7 +34,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors(AllowAllCORS);
 app.UseAuthorization();
 
 app.MapControllers();
