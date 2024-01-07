@@ -7,7 +7,7 @@ await KioskApi2.Managers.StartUpManager.Startup(builder.Configuration);
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("All",
+    options.AddDefaultPolicy(
         policy =>
         {
             policy.AllowAnyOrigin();
