@@ -130,12 +130,12 @@ public class WeatherItem : IModel
         this.TodayMaxTemp = (int)jsonWeatherData["daily"][0]["temp"]["max"];
 
         // #summary and forecast
-        this.TodayDescription = jsonWeatherData["current"]["weather"][0]["description"];
+        this.TodayDescription = jsonWeatherData["daily"][0]["summary"];
 
         this.TommorrowMinTemp = jsonWeatherData["daily"][1]["temp"]["min"];
         this.TommorrowMaxTemp = jsonWeatherData["daily"][1]["temp"]["max"];
 
-        this.TommorrowDescription = jsonWeatherData["daily"][1]["weather"][0]["description"];
+        this.TommorrowDescription = jsonWeatherData["daily"][1]["summary"];
 
         this.CurrentIconId = jsonWeatherData["current"]["weather"][0]["icon"];
 
