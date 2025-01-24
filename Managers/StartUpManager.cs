@@ -3,8 +3,10 @@ using SQLite;
 
 namespace KioskApi2.Managers;
 
-public static class StartUpManager {
-    public static async Task Startup(IConfiguration configuration){
+public static class StartUpManager
+{
+    public static async Task Startup(IConfiguration configuration)
+    {
         //THINGS IN HERE WILL RUN ON EVERY START UP
         //PLEASE ENSURE THAT METHODS ARE IDEMPOTENT (AKA RE-RUNNABLE)
 
@@ -13,7 +15,7 @@ public static class StartUpManager {
     }
     private static async Task InitializeDatabase(IConfiguration configuration)
     {
-        
+
         var databaseId = configuration["DatabaseId"] ?? "CachedData";
         var database = new SQLiteAsyncConnection(databaseId);
 

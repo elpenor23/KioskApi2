@@ -2,14 +2,15 @@ namespace KioskApi2.Models;
 
 public class IndoorStatusData : IModel
 {
-    public IndoorStatusData(){
+    public IndoorStatusData()
+    {
         this.Id = "1";
         this.Data = "XX";
         this.LastSet = DateTime.Now;
     }
     public IndoorStatusData(string data = "XX", DateTime? lastSet = null)
     {
-        if (lastSet == null) {lastSet = DateTime.Now;}
+        if (lastSet == null) { lastSet = DateTime.Now; }
 
         this.Id = "1";
         this.Data = data;

@@ -1,6 +1,7 @@
 namespace KioskApi2.Enums;
 
-public enum TimeOfDay {
+public enum TimeOfDay
+{
     Dawn,
     Dusk,
     Day,
@@ -8,14 +9,16 @@ public enum TimeOfDay {
     Unknown
 }
 
-public enum WindType {
+public enum WindType
+{
     None,
     Light,
     Medium,
     Heavy
 }
 
-public enum Intensity {
+public enum Intensity
+{
     Race,
     Workout,
     Long,
@@ -24,7 +27,8 @@ public enum Intensity {
 
 }
 
-public enum Feel {
+public enum Feel
+{
     None,
     Cool,
     Warm
@@ -32,9 +36,11 @@ public enum Feel {
 
 public static class Enums
 {
-    public static Feel ConvertStringToFeel(string feel){
+    public static Feel ConvertStringToFeel(string feel)
+    {
         Feel returnVal = Feel.None;
-        switch (feel){
+        switch (feel)
+        {
             case "cool":
                 returnVal = Feel.Cool;
                 break;
@@ -45,10 +51,12 @@ public static class Enums
         return returnVal;
     }
 
-    public static Intensity ConvertStringToIntensity(string? intensity){
+    public static Intensity ConvertStringToIntensity(string? intensity)
+    {
         Intensity returnVal = Intensity.Normal;
-        
-        switch (intensity ?? "Easy"){
+
+        switch (intensity ?? "Easy")
+        {
             case "Easy":
                 returnVal = Intensity.Easy;
                 break;

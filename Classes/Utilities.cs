@@ -7,11 +7,13 @@ public static class Arrays
     {
         return arrays.All(a => a.Length == arrays[0].Length);
     }
-    
+
 }
 
-public static class ApiUtils{
-    public async static Task<string> GetApiJsonData(string uri){
+public static class ApiUtils
+{
+    public async static Task<string> GetApiJsonData(string uri)
+    {
         var result = "[{}]";
 
         using (var client = new HttpClient())

@@ -39,7 +39,7 @@ public class ClothingController(IConfiguration configuration) : ControllerBase
 
         try
         {
-            data = await clothingManager.GetCalcuatedClothing(feels, ids, names, colors, lat, lon);
+            data = await clothingManager.GetCalculatedClothing(feels, ids, names, colors, lat, lon);
         }
         catch (Exception ex)
         {

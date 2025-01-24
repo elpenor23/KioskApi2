@@ -8,12 +8,12 @@ public class SolarManager(IConfiguration configuration)
 {
     private DatabaseManager dbm = new(configuration);
     public DatabaseManager Dbm { get => dbm; set => dbm = value; }
-    private IConfiguration Configuration { get; } = configuration;
+    private IConfiguration Configuration { get; } = configuration ?? throw new Exception("Configuration Error");
 
     public async Task<SolarData> GetSolarData()
     {
-        var data =  await GetSolarDataFromCache();
-        
+        var data = await GetSolarDataFromCache();
+
         //This needs to be a negative number since we are checking for X minutes AGO
         if (!double.TryParse(Configuration["SolarApi:solar_data_cache_time_minutes"], out double cache_time))
         {
@@ -22,7 +22,8 @@ public class SolarManager(IConfiguration configuration)
 
         var xMinutesAgo = DateTime.Now.AddMinutes(cache_time);
 
-        if (data == null || data.CacheLastUpdated < xMinutesAgo){
+        if (data == null || data.CacheLastUpdated < xMinutesAgo)
+        {
             data = await GetSolarDataFromApi();
             SaveSolarData(data);
         }
@@ -45,14 +46,16 @@ public class SolarManager(IConfiguration configuration)
 
         var solarData = ParseJsonSolarData(rawData);
 
-        solarData.MaxPower = double.Parse(Configuration["SolarMaxProduction"]);
+        var solarMaxProduction = Configuration["SolarMaxProduction"] ?? "1";
+
+        solarData.MaxPower = double.Parse(solarMaxProduction);
 
         return solarData;
 
     }
     private async Task<SolarData> GetSolarDataFromCache()
     {
-        var  solarData = await Dbm.GetSolarData();
+        var solarData = await Dbm.GetSolarData();
         var data = solarData.Where(x => x.Id == 1).ToList().FirstOrDefault() ?? new SolarData();
         return data;
     }
@@ -60,7 +63,7 @@ public class SolarManager(IConfiguration configuration)
     private async void SaveSolarData(SolarData sd)
     {
         var cached = await GetSolarDataFromCache();
-        
+
         cached = sd;
 
         Dbm.AddUpdateData(cached);

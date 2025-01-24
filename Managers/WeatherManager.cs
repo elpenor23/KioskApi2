@@ -27,7 +27,7 @@ public class WeatherManager(IConfiguration configuration)
         }
 
         var xMinutesAgo = DateTime.Now.AddMinutes(cache_time);
-        
+
         WeatherItem ReturnData = new WeatherItem();
         var weatherData = await Dbm.GetWeatherData(100);
 

@@ -9,10 +9,12 @@ public class VersionController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<Version>> Get()
     {
-        var v = new Version
-        {
-            version = "v1.2"
-        };
+        var v = await Task.Run(() =>
+            new Version
+            {
+                version = "v2.0"
+            });
+
 
         return Ok(v);
     }

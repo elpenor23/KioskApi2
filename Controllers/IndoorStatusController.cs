@@ -9,7 +9,7 @@ namespace KioskApi2.Controllers;
 public class IndoorStatusController : ControllerBase
 {
     private IndoorStatusManager indoorStatusManager;
-    public IndoorStatusController( IConfiguration configuration)
+    public IndoorStatusController(IConfiguration configuration)
     {
         indoorStatusManager = new IndoorStatusManager(configuration);
     }
@@ -18,17 +18,19 @@ public class IndoorStatusController : ControllerBase
     public async Task<ActionResult<IndoorStatusData>> Get()
     {
         var data = await indoorStatusManager.GetIndoorStatus();
-        
+
         return Ok(data);
 
     }
 
     [HttpPost]
-    public async Task<ActionResult<IndoorStatusData>> Post([FromBody]string status)
+    public async Task<ActionResult<IndoorStatusData>> Post([FromBody] string status)
     {
-        try{
-        var data = await indoorStatusManager.SaveIndoorStatus(status);
-        }catch (Exception ex)
+        try
+        {
+            var data = await indoorStatusManager.SaveIndoorStatus(status);
+        }
+        catch (Exception ex)
         {
             ModelState.AddModelError("Indoor Status Controller", ex.Message);
             return BadRequest(ModelState);

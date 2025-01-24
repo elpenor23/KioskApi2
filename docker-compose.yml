@@ -1,0 +1,14 @@
+services:
+  api:
+    image: emalinowski23/kioskapi2
+    container_name: kioskapi2
+    ports:
+      - "8080:8080"
+      - "44333:44333"
+    expose:
+    #   # Opens port on the container
+      - "8080"
+      - "44333"
+    env_file:
+      - .env
+    restart: unless-stopped

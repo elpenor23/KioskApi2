@@ -1,11 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using KioskApi2.Models;
 using KioskApi2.Managers;
-using System.Web.Http;
 using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
-using System.Net;
-using System.Net.Http;
 
 namespace KioskApi2.Controllers;
 
@@ -18,7 +15,8 @@ public class WeatherController(IConfiguration configuration) : ControllerBase
     [HttpGet]
     public async Task<ActionResult<WeatherItem>> Get([FromQuery] string lat, [FromQuery] string lon)
     {
-        var data = new WeatherItem();
+
+        WeatherItem? data;
 
         try
         {

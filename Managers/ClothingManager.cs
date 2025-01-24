@@ -8,7 +8,7 @@ public class ClothingManager(IConfiguration configuration)
     private readonly IConfiguration Configuration = configuration;
     private readonly WeatherManager weatherManager = new(configuration);
 
-    public async Task<IEnumerable<PersonsClothing>> GetCalcuatedClothing(
+    public async Task<IEnumerable<PersonsClothing>> GetCalculatedClothing(
         string feels,
         string ids,
         string names,
@@ -158,7 +158,7 @@ public class ClothingManager(IConfiguration configuration)
             return 0;
         }
 
-        decimal timeOfDayAndConditionsAdjustment = TimeOfDayAndPrecipitationTempAdustment(weather);
+        decimal timeOfDayAndConditionsAdjustment = TimeOfDayAndPrecipitationTempAdjustment(weather);
         decimal windAdjustment = WindTemperatureAdjustment(weather);
         decimal intensityAdjustment = IntensityAdjustment(intensity);
         decimal feelAdjustment = FeelAdjustment(feel);
@@ -258,7 +258,7 @@ public class ClothingManager(IConfiguration configuration)
 
         return windType;
     }
-    private decimal TimeOfDayAndPrecipitationTempAdustment(WeatherItem weather)
+    private decimal TimeOfDayAndPrecipitationTempAdjustment(WeatherItem weather)
     {
         decimal timeOfDayAndConditionsAdjustment = 0;
         switch (weather.TimeOfDay)
@@ -351,11 +351,11 @@ public class ClothingManager(IConfiguration configuration)
     {
         var bodyParts = new List<BodyPart>();
 
-        var defaultbodyPartsList = Configuration.GetSection("BodyParts")?.GetChildren()?.Select(x => x.Value)?.ToList();
+        var defaultBodyPartsList = Configuration.GetSection("BodyParts")?.GetChildren()?.Select(x => x.Value)?.ToList();
 
-        if (defaultbodyPartsList == null) { return bodyParts; }
+        if (defaultBodyPartsList == null) { return bodyParts; }
 
-        foreach (var id in defaultbodyPartsList)
+        foreach (var id in defaultBodyPartsList)
         {
             var bp = new BodyPart();
             bp.Id = id;

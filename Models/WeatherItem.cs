@@ -10,7 +10,7 @@ public class WeatherItem : IModel
     [SQLite.PrimaryKey]
     public string? Id { get; set; }
     public decimal? Lat { get; set; }
-    
+
     public decimal? Lon { get; set; }
 
     public DateTime? WeatherTime { get; set; }
@@ -65,28 +65,28 @@ public class WeatherItem : IModel
             return string.Format("Today: {0}\n Low: {1} / High: {2}", TodayDescription, TodayMinTemp, TodayMaxTemp);
         }
     }
-    public int? TommorrowMinTemp { get; set; }
-    public string? TommorrowMinTempFormatted
+    public int? TomorrowMinTemp { get; set; }
+    public string? TomorrowMinTempFormatted
     {
         get
         {
-            return string.Format("{0}{1}", TommorrowMinTemp.ToString(), degree_sign);
+            return string.Format("{0}{1}", TomorrowMinTemp.ToString(), degree_sign);
         }
     }
-    public int? TommorrowMaxTemp { get; set; }
-    public string? TommorrowMaxTempFormatted
+    public int? TomorrowMaxTemp { get; set; }
+    public string? TomorrowMaxTempFormatted
     {
         get
         {
-            return string.Format("{0}{1}", TommorrowMaxTemp.ToString(), degree_sign);
+            return string.Format("{0}{1}", TomorrowMaxTemp.ToString(), degree_sign);
         }
     }
-    public string? TommorrowDescription { get; set; }
-    public string? TommorrowForecast
+    public string? TomorrowDescription { get; set; }
+    public string? TomorrowForecast
     {
         get
         {
-            return string.Format("Tomorrow: {0}\nLow: {1} / High: {2}", TommorrowDescription, TommorrowMinTempFormatted, TommorrowMaxTempFormatted);
+            return string.Format("Tomorrow: {0}\nLow: {1} / High: {2}", TomorrowDescription, TomorrowMinTempFormatted, TomorrowMaxTempFormatted);
         }
     }
 
@@ -123,8 +123,8 @@ public class WeatherItem : IModel
         this.CurrentDewPoint = (int)jsonWeatherData["current"]["dew_point"];
 
         // #format temps for display
-        var feelslike = jsonWeatherData["current"]["feels_like"];
-        this.CurrentFeelsLike = (int)Math.Round((decimal)feelslike.Value, 0);
+        var feelsLike = jsonWeatherData["current"]["feels_like"];
+        this.CurrentFeelsLike = (int)Math.Round((decimal)feelsLike.Value, 0);
 
         this.TodayMinTemp = (int)jsonWeatherData["daily"][0]["temp"]["min"];
         this.TodayMaxTemp = (int)jsonWeatherData["daily"][0]["temp"]["max"];
@@ -132,10 +132,10 @@ public class WeatherItem : IModel
         // #summary and forecast
         this.TodayDescription = jsonWeatherData["daily"][0]["summary"];
 
-        this.TommorrowMinTemp = jsonWeatherData["daily"][1]["temp"]["min"];
-        this.TommorrowMaxTemp = jsonWeatherData["daily"][1]["temp"]["max"];
+        this.TomorrowMinTemp = jsonWeatherData["daily"][1]["temp"]["min"];
+        this.TomorrowMaxTemp = jsonWeatherData["daily"][1]["temp"]["max"];
 
-        this.TommorrowDescription = jsonWeatherData["daily"][1]["summary"];
+        this.TomorrowDescription = jsonWeatherData["daily"][1]["summary"];
 
         this.CurrentIconId = jsonWeatherData["current"]["weather"][0]["icon"];
 
@@ -163,10 +163,11 @@ public class WeatherItem : IModel
 
     private TimeOfDay GetTimeOfDay()
     {
-        if (this.WeatherTime == null || this.SunriseTime == null || this.SunsetTime == null){
-            return TimeOfDay.Unknown; 
+        if (this.WeatherTime == null || this.SunriseTime == null || this.SunsetTime == null)
+        {
+            return TimeOfDay.Unknown;
         }
-        
+
         if (isDawn(this.WeatherTime.Value, this.SunriseTime.Value))
         {
             return TimeOfDay.Day;
@@ -192,7 +193,7 @@ public class WeatherItem : IModel
 
     private static bool isDay(DateTime currentTime, DateTime sunRiseTime, DateTime sunSetTime)
     {
-        return (sunRiseTime <= currentTime && currentTime <= sunSetTime);
+        return sunRiseTime <= currentTime && currentTime <= sunSetTime;
     }
 
     private static bool isDawn(DateTime currentTime, DateTime sunRiseTime)
@@ -200,7 +201,7 @@ public class WeatherItem : IModel
         var thirtyMinutesBeforeSunrise = sunRiseTime.AddMinutes(-30);
         var thirtyMinutesAfterSunrise = sunRiseTime.AddMinutes(30);
 
-        return (thirtyMinutesBeforeSunrise <= currentTime && currentTime <= thirtyMinutesAfterSunrise);
+        return thirtyMinutesBeforeSunrise <= currentTime && currentTime <= thirtyMinutesAfterSunrise;
     }
 
     private static bool isDusk(DateTime currentTime, DateTime sunSetTime)
@@ -208,12 +209,12 @@ public class WeatherItem : IModel
         var thirtyMinutesBeforeSunset = sunSetTime.AddMinutes(-30);
         var thirtyMinutesAfterSunset = sunSetTime.AddMinutes(30);
 
-        return (thirtyMinutesBeforeSunset <= currentTime && currentTime <= thirtyMinutesAfterSunset);
+        return thirtyMinutesBeforeSunset <= currentTime && currentTime <= thirtyMinutesAfterSunset;
     }
 
     private static bool isNight(DateTime currentTime, DateTime sunSetTime)
     {
-        return (currentTime >= sunSetTime);
+        return currentTime >= sunSetTime;
     }
 
     public static implicit operator HttpContent(WeatherItem v)
