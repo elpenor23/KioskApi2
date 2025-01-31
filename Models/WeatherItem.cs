@@ -155,10 +155,12 @@ public class WeatherItem : IModel
         return;
     }
 
-    private DateTime ConvertEpochTimeToDateTime(Int64 timestamp)
+    private static DateTime ConvertEpochTimeToDateTime(Int64 timestamp)
     {
-        System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
-        return dtDateTime.AddSeconds(timestamp).ToLocalTime();
+        var dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(timestamp);
+        var dateTime = dateTimeOffset.DateTime;
+
+        return dateTime.ToLocalTime();
     }
 
     private TimeOfDay GetTimeOfDay()
