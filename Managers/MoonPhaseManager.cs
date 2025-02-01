@@ -1,14 +1,17 @@
 using KioskApi2.Models;
 
 namespace KioskApi2.Managers;
-public class MoonPhaseManager(IConfiguration configuration)
+public class MoonPhaseManager(IConfiguration configuration, Serilog.ILogger logger, IWeatherManager weatherManager) : IMoonPhaseManager
 {
-    private IConfiguration Configuration { get; } = configuration;
-    private readonly WeatherManager weatherManager = new(configuration);
+    private IConfiguration _configuration { get; } = configuration;
+
+    private readonly IWeatherManager _weatherManager = weatherManager;
+
+    private readonly Serilog.ILogger _logger = logger;
 
     public async Task<MoonData> GetMoonPhase(string lat, string lon)
     {
-        var weather = await weatherManager.GetWeather(lat, lon);
+        var weather = await _weatherManager.GetWeather(lat, lon);
 
         //check for nulls so it stops warning me
         if (weather.MoonPhase == null || weather.SunriseTime == null || weather.SunsetTime == null) { return new MoonData(4, "Full Moon", "full-moon", "24 Hours", DateTime.Now, DateTime.Now); }
@@ -20,6 +23,9 @@ public class MoonPhaseManager(IConfiguration configuration)
 
     private MoonData GetMoonData(decimal moonPhase, DateTime sunrise, DateTime sunset)
     {
+        _logger.Debug("GetMoonData - Sunrise: {sunrise}", sunrise.ToString());
+        _logger.Debug("GetMoonData - Sunset: {sunset}", sunset.ToString());
+
         var index = GetPhaseIndex(moonPhase);
         var data = GetPhaseData(index);
         var dayLength = GetDayLength(sunrise, sunset);

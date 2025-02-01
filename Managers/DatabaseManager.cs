@@ -3,7 +3,7 @@ using KioskApi2.Models;
 using SQLite;
 
 namespace KioskApi2.Managers;
-public class DatabaseManager
+public class DatabaseManager : IDatabaseManager
 {
     #region "Database Access"
     readonly string databaseId;

@@ -1,11 +1,14 @@
 using KioskApi2.Models;
 namespace KioskApi2.Managers;
-public class IndoorStatusManager(IConfiguration configuration)
+public class IndoorStatusManager(IConfiguration configuration, Serilog.ILogger logger) : IIndoorStatusManager
 {
     private readonly DatabaseManager dbm = new(configuration);
+    private readonly Serilog.ILogger _logger = logger;
 
     public async Task<IndoorStatusData> GetIndoorStatus()
     {
+        _logger.Debug("Getting IndoorStatusData");
+        
         var statusData = await dbm.GetIndoorStatusData();
         var data = statusData.Where(x => x.Id == "1").ToList().FirstOrDefault() ?? new IndoorStatusData();
         return data;

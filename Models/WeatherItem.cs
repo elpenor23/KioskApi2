@@ -1,10 +1,12 @@
+using System.Globalization;
 using KioskApi2.Enums;
 using SQLite;
 
 namespace KioskApi2.Models;
 
-public class WeatherItem : IModel
+public class WeatherItem() : IModel
 {
+    // private readonly Serilog.ILogger _logger = logger;
     const string degree_sign = "°";
 
     [SQLite.PrimaryKey]
@@ -143,6 +145,9 @@ public class WeatherItem : IModel
 
         this.WeatherTime = ConvertEpochTimeToDateTime(jsonWeatherData["current"]["dt"].Value);
 
+        // _logger.Debug("Raw Sunrise: {rawSunrise}", jsonWeatherData["current"]["sunrise"].Value);
+        // _logger.Debug("Raw SunSet: {rawSunset}", jsonWeatherData["current"]["sunset"].Value);
+
         this.SunriseTime = ConvertEpochTimeToDateTime(jsonWeatherData["current"]["sunrise"].Value);
         this.SunsetTime = ConvertEpochTimeToDateTime(jsonWeatherData["current"]["sunset"].Value);
 
@@ -155,12 +160,20 @@ public class WeatherItem : IModel
         return;
     }
 
-    private static DateTime ConvertEpochTimeToDateTime(Int64 timestamp)
+    private DateTime ConvertEpochTimeToDateTime(Int64 timestamp)
     {
-        var dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(timestamp);
-        var dateTime = dateTimeOffset.DateTime;
+        // _logger.Debug("TimeStamp to convert: {timestamp}", timestamp.ToString());
 
-        return dateTime.ToLocalTime();
+        var dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(timestamp);
+        // _logger.Debug("DateTimeOffset: {dateTimeOffset}", dateTimeOffset.ToString());
+
+        var dateTime = dateTimeOffset.DateTime;
+        // _logger.Debug("dateTime: {dateTime}", dateTime.ToString());
+
+        var localTime = dateTime.ToLocalTime();
+        // _logger.Debug("localTime: {localTime}", localTime.ToString());
+
+        return localTime;
     }
 
     private TimeOfDay GetTimeOfDay()

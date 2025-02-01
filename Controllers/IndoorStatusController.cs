@@ -8,16 +8,22 @@ namespace KioskApi2.Controllers;
 [ApiController]
 public class IndoorStatusController : ControllerBase
 {
-    private IndoorStatusManager indoorStatusManager;
-    public IndoorStatusController(IConfiguration configuration)
+    private readonly IIndoorStatusManager _indoorStatusManager;
+    private readonly IConfiguration _configuration;
+    private readonly Serilog.ILogger _logger;
+    public IndoorStatusController(IConfiguration configuration, IIndoorStatusManager indoorStatusManager, Serilog.ILogger logger)
     {
-        indoorStatusManager = new IndoorStatusManager(configuration);
+        _logger = logger;
+        _configuration = configuration;
+        _indoorStatusManager = indoorStatusManager;
     }
 
     [HttpGet]
     public async Task<ActionResult<IndoorStatusData>> Get()
     {
-        var data = await indoorStatusManager.GetIndoorStatus();
+        _logger.Debug("IndoorStatusController - Getting Indoor Status");
+
+        var data = await _indoorStatusManager.GetIndoorStatus();
 
         return Ok(data);
 
@@ -26,9 +32,10 @@ public class IndoorStatusController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<IndoorStatusData>> Post([FromBody] string status)
     {
+        _logger.Debug("IndoorStatusController - Posting Indoor Status");
         try
         {
-            var data = await indoorStatusManager.SaveIndoorStatus(status);
+            var data = await _indoorStatusManager.SaveIndoorStatus(status);
         }
         catch (Exception ex)
         {

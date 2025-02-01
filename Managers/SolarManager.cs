@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace KioskApi2.Managers;
 
-public class SolarManager(IConfiguration configuration)
+public class SolarManager(IConfiguration configuration) : ISolarManager
 {
     private DatabaseManager dbm = new(configuration);
     public DatabaseManager Dbm { get => dbm; set => dbm = value; }

@@ -1,3 +1,6 @@
+using KioskApi2.Managers;
+using Serilog;
+
 var AllowAllCORS = "_MyAllowAllCORS";
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,11 +19,21 @@ builder.Services.AddCors(options =>
         });
 });
 
+builder.Host.UseSerilog((context, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration));
+
 // Add services to the container.
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddSingleton<IMoonPhaseManager, MoonPhaseManager>();
+builder.Services.AddSingleton<IClothingManager, ClothingManager>();
+builder.Services.AddSingleton<IIndoorStatusManager, IndoorStatusManager>();
+builder.Services.AddSingleton<ISolarManager, SolarManager>();
+builder.Services.AddSingleton<IWeatherManager, WeatherManager>();
+builder.Services.AddSingleton<IDatabaseManager, DatabaseManager>();
 
 var app = builder.Build();
 
@@ -32,6 +45,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
 app.UseCors(AllowAllCORS);

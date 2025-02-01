@@ -2,15 +2,17 @@ using KioskApi2.Utilities;
 using KioskApi2.Models;
 
 namespace KioskApi2.Managers;
-public class WeatherManager(IConfiguration configuration)
+public class WeatherManager(IConfiguration configuration, Serilog.ILogger logger) : IWeatherManager
 {
     private DatabaseManager dbm = new(configuration);
 
     public DatabaseManager Dbm { get => dbm; set => dbm = value; }
     private IConfiguration Configuration { get; } = configuration;
+    private readonly Serilog.ILogger _logger = logger;
 
     public async Task<WeatherItem> GetWeather(string latString, string lonString)
     {
+        _logger.Debug("Getting Weather!");
         if (!decimal.TryParse(latString, out decimal lat) || !decimal.TryParse(lonString, out decimal lon))
         {
             throw new Exception("Invalid Latitude or Longitude.");
@@ -20,6 +22,9 @@ public class WeatherManager(IConfiguration configuration)
         lat = Math.Round(lat, 4, MidpointRounding.ToZero);
         lon = Math.Round(lon, 4, MidpointRounding.ToZero);
 
+        _logger.Debug("lat: {lat}", lat);
+        _logger.Debug("lon: {lon}", lon);
+
         //This needs to be a negative number since we are checking for X minutes AGO
         if (!double.TryParse(Configuration["WeatherApi:weather_data_cache_time_minutes"], out double cache_time))
         {
@@ -28,7 +33,7 @@ public class WeatherManager(IConfiguration configuration)
 
         var xMinutesAgo = DateTime.Now.AddMinutes(cache_time);
 
-        WeatherItem ReturnData = new WeatherItem();
+        var ReturnData = new WeatherItem();
         var weatherData = await Dbm.GetWeatherData(100);
 
         //get cached data

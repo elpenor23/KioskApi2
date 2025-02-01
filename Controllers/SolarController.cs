@@ -6,17 +6,20 @@ namespace KioskApi2.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class SolarController(IConfiguration configuration) : ControllerBase
+public class SolarController(IConfiguration configuration, Serilog.ILogger logger, ISolarManager solarManager) : ControllerBase
 {
-    private readonly SolarManager solarManager = new(configuration);
+    private readonly ISolarManager _solarManager = solarManager;
+    private readonly Serilog.ILogger _logger = logger;
+    private readonly IConfiguration _configuration = configuration;
 
     [HttpGet]
     public async Task<ActionResult<SolarData>> Get()
-    {        
+    {
+        _logger.Debug("SolarController - Getting Solar Data.");
         SolarData data;
         try
         {
-            data = await solarManager.GetSolarData();
+            data = await _solarManager.GetSolarData();
         }
         catch (Exception ex)
         {

@@ -3,10 +3,12 @@ using KioskApi2.Enums;
 using KioskApi2.Utilities;
 
 namespace KioskApi2.Managers;
-public class ClothingManager(IConfiguration configuration)
+public class ClothingManager(IConfiguration configuration, Serilog.ILogger logger, IWeatherManager weatherManager) : IClothingManager
 {
     private readonly IConfiguration Configuration = configuration;
-    private readonly WeatherManager weatherManager = new(configuration);
+    private readonly IWeatherManager _weatherManager = weatherManager;
+
+    private readonly Serilog.ILogger _logger = logger;
 
     public async Task<IEnumerable<PersonsClothing>> GetCalculatedClothing(
         string feels,
@@ -16,6 +18,8 @@ public class ClothingManager(IConfiguration configuration)
         string lat,
         string lon)
     {
+
+        _logger.Debug("Calculating Clothing!");
 
         string[] arrayFeels = feels.Split(",");
         string[] arrayIds = ids.Split(",");
@@ -29,7 +33,7 @@ public class ClothingManager(IConfiguration configuration)
         }
 
         var people = CreatePeople(arrayFeels, arrayIds, arrayName, arrayColor);
-        var weather = await weatherManager.GetWeather(lat, lon);
+        var weather = await _weatherManager.GetWeather(lat, lon);
         var intensities = Configuration.GetSection("Intensities")?.GetChildren()?.Select(x => x.Value)?.ToList() ?? [];
 
         if (intensities == null) { return new List<PersonsClothing>(); }

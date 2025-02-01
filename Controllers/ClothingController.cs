@@ -6,14 +6,17 @@ namespace KioskApi2.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class ClothingController(IConfiguration configuration) : ControllerBase
+public class ClothingController(IConfiguration configuration, Serilog.ILogger logger, IClothingManager clothingManager) : ControllerBase
 {
-    private readonly ClothingManager clothingManager = new(configuration);
+    private readonly IClothingManager _clothingManager = clothingManager;
+    private readonly Serilog.ILogger _logger = logger;
+    private readonly IConfiguration _configuration = configuration;
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<BodyPart>>> GetAllClothes()
     {
-        var data = await clothingManager.GetClothing();
+        _logger.Debug("ClothingController - GetAllClothes");
+        var data = await _clothingManager.GetClothing();
         return Ok(data);
     }
 
@@ -21,7 +24,8 @@ public class ClothingController(IConfiguration configuration) : ControllerBase
     [Route("BodyParts")]
     public async Task<ActionResult<IEnumerable<BodyPart>>> GetBodyParts()
     {
-        var data = await clothingManager.GetBodyParts();
+        _logger.Debug("ClothingController - GetBodyParts");
+        var data = await _clothingManager.GetBodyParts();
         return Ok(data);
     }
 
@@ -35,11 +39,12 @@ public class ClothingController(IConfiguration configuration) : ControllerBase
         [FromQuery] string lat,
         [FromQuery] string lon)
     {
+        _logger.Debug("ClothingController - GetClothingCalculated");
         IEnumerable<PersonsClothing> data;
 
         try
         {
-            data = await clothingManager.GetCalculatedClothing(feels, ids, names, colors, lat, lon);
+            data = await _clothingManager.GetCalculatedClothing(feels, ids, names, colors, lat, lon);
         }
         catch (Exception ex)
         {
