@@ -2,5 +2,6 @@
     "cSpell.words": [
         "Newtonsoft",
         "timeofday"
-    ]
+    ],
+    "postman.settings.dotenv-detection-notification-visibility": false
 }

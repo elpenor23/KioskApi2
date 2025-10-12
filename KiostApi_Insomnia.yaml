@@ -1,0 +1,349 @@
+type: collection.insomnia.rest/5.0
+name: Kiosk API
+meta:
+  id: wrk_a90181667d5345258cd54a8aca5a36b6
+  created: 1760142112136
+  modified: 1760232418010
+  description: ""
+collection:
+  - url: http://localhost:5127/api/Weather
+    name: GetWeather
+    meta:
+      id: req_da10dc77b6d84a2ebed9f88992259775
+      created: 1760142112173
+      modified: 1760231358425
+      isPrivate: false
+      description: ""
+      sortKey: -1760142112173
+    method: GET
+    parameters:
+      - id: pair_16f8b8717b1d411cb08c05807c2d5e19
+        name: lat
+        value: "44.176097"
+        description: ""
+        disabled: false
+      - id: pair_87490ad5ea9145fda732c2f9be62c98e
+        name: lon
+        value: "-70.679317"
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/11.6.1
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:5127/api/Weather/test/string
+    name: GetWeatherTestString
+    meta:
+      id: req_78ef983adb2744c1b9676e6abddf90e7
+      created: 1760144857554
+      modified: 1760231403640
+      isPrivate: false
+      description: ""
+      sortKey: -1760142112123
+    method: GET
+    parameters:
+      - id: pair_12b57215551940b2896eba4560a37b8b
+        name: lat
+        value: "44.176097"
+        description: ""
+        disabled: false
+      - id: pair_d9ec336f15ed42ffae2930dac5d23546
+        name: lon
+        value: "-70.679317"
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/11.6.1
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: https://api.openweathermap.org/data/3.0/onecall
+    name: OpenWeatherMap
+    meta:
+      id: req_8c8e8a50e3ae4122a8d12e75b6e40698
+      created: 1760192475051
+      modified: 1760231345032
+      isPrivate: false
+      description: ""
+      sortKey: -1760192475051
+    method: GET
+    parameters:
+      - id: pair_67e0f8a5312a4efdbe0906a7e9ee3ba5
+        name: appid
+        value: 158e1056fbd6e1f5384bc0ec2a8ee4da
+        description: ""
+        disabled: false
+      - id: pair_63a064d2e6f24144bc41697d6835bf5d
+        name: lat
+        value: "44.176097"
+        description: ""
+        disabled: false
+      - id: pair_21e2e55a612c4bbea91c4a6b235ccffd
+        name: lon
+        value: "-70.679317"
+        description: ""
+        disabled: false
+      - id: pair_4f559cbd1ccb4b3496edbcd087c65ec0
+        name: lang
+        value: en
+        description: ""
+        disabled: false
+      - id: pair_8926161e17b14565bb328b57d0298672
+        name: units
+        value: imperial
+        description: ""
+        disabled: false
+      - id: pair_dbbd6e85ca9b40e1a85d69fc2667a000
+        name: exclude
+        value: minutely,hourly
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/11.6.1
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: https://monitoringapi.solaredge.com/site/4056054/overview
+    name: SolarEdge
+    meta:
+      id: req_c4e855a4b4784f05b2e72708405203ed
+      created: 1760192645857
+      modified: 1760231255123
+      isPrivate: false
+      description: ""
+      sortKey: -1760192645857
+    method: GET
+    parameters:
+      - id: pair_955e1549ea1c4534bbff5b41853e63ce
+        name: api_key
+        value: 311RAAAT710YQ19U0Q0B1KY1MAND1W6R
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/11.6.1
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:5127/api/solar
+    name: GetSolarData
+    meta:
+      id: req_68a0c5e4d8af43da841adcba9bc0bfc8
+      created: 1760193372938
+      modified: 1760194346156
+      isPrivate: false
+      description: ""
+      sortKey: -1760193372938
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.6.1
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:5127/api/moonphase
+    name: GetMoonData
+    meta:
+      id: req_772028d5ad484f538a7188466ec3b061
+      created: 1760196196265
+      modified: 1760231223564
+      isPrivate: false
+      description: ""
+      sortKey: -1760142112148
+    method: GET
+    parameters:
+      - id: pair_9e4bdb8488ac498dbbc5ab0e33e135c1
+        name: lat
+        value: "44.176097"
+        description: ""
+        disabled: false
+      - id: pair_c611750585b54ef591e8e95f2c4fad19
+        name: lon
+        value: "-70.679317"
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/11.6.1
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:5127/api/clothing/bodyparts
+    name: GetBodyParts
+    meta:
+      id: req_2ec4c583b6e34b24ac97a872dcc5838a
+      created: 1760202413947
+      modified: 1760202454324
+      isPrivate: false
+      description: ""
+      sortKey: -1760202413947
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.6.1
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:5127/api/clothing
+    name: GetAllClothing
+    meta:
+      id: req_b851c6c87aab43bfac9c4751c4367364
+      created: 1760222928969
+      modified: 1760231429608
+      isPrivate: false
+      description: ""
+      sortKey: -1760197893442.5
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.6.1
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:5127/api/clothing/calculate
+    name: CalculateClothing
+    meta:
+      id: req_7de8d4c36b044b53a3d3ddf363690658
+      created: 1760228682358
+      modified: 1760228866167
+      isPrivate: false
+      description: ""
+      sortKey: -1760200153694.75
+    method: GET
+    parameters:
+      - id: pair_9fad5e41787640bba0857d594061d2bb
+        name: feels
+        value: "2"
+        description: ""
+        disabled: false
+      - id: pair_a2f5ae19dfd549fa9d1e4cddb9c734e8
+        name: ids
+        value: "1"
+        description: ""
+        disabled: false
+      - id: pair_9503b549548244c59514c785e7a5bd05
+        name: names
+        value: Eric
+        description: ""
+        disabled: false
+      - id: pair_8ce8c4c69dea42ee91f5b10135b033f0
+        name: colors
+        value: Green
+        description: ""
+        disabled: false
+      - id: pair_d42923c7150c42c6a8fb5c7f5a108f2b
+        name: lat
+        value: "44.176097"
+        description: ""
+        disabled: false
+      - id: pair_5bb7fd2913b048f282203e2daf09e7b0
+        name: lon
+        value: "-70.679317"
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/11.6.1
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:5127/api/indoorstatus
+    name: GetIndoorStatus
+    meta:
+      id: req_da859cadfb07439eb6af652e5b425adb
+      created: 1760232044171
+      modified: 1760232201293
+      isPrivate: false
+      description: ""
+      sortKey: -1760142112135.5
+    method: GET
+    parameters:
+      - id: pair_eb52d55522ab45f8afe3bb6291601101
+        name: ""
+        value: ""
+        description: ""
+        disabled: true
+    headers:
+      - name: User-Agent
+        value: insomnia/11.6.1
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_97e23122d01bce403874f51b973a059633d58b7d
+    created: 1760142112138
+    modified: 1760231259154
+  cookies:
+    - key: JSESSIONID
+      value: 921520CD3204F5AAC8FA9B7F72F4A1E7
+      domain: monitoringapi.solaredge.com
+      path: /
+      secure: true
+      httpOnly: true
+      hostOnly: true
+      creation: 2025-10-11T14:26:01.738Z
+      lastAccessed: 2025-10-12T01:07:39.154Z
+      id: 64c25803-3c6f-4924-b984-cacc2d7cd256
+environments:
+  name: Base Environment
+  meta:
+    id: env_97e23122d01bce403874f51b973a059633d58b7d
+    created: 1760142112138
+    modified: 1760142112138
+    isPrivate: false

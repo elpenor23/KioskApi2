@@ -1,6 +1,6 @@
 # API for Live Information Kiosk
 This API implements the following
- - Loads weather from darksky.net and does some pre-formatting
+ - Loads weather from Open Weather Map and does some pre-formatting
  - returns the weather info
  - Calculates clothing needed to run based on passed in data and weather 
    and returns it in a list based on the list passed in.

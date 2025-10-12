@@ -7,7 +7,7 @@
 # EXPOSE 44333
 #FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 #FROM mcr.microsoft.com/dotnet/sdk:8.0-nanoserver-$TAG AS build
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 COPY ["KioskApi2.csproj", "./"]
 RUN dotnet restore "./KioskApi2.csproj"
