@@ -1,3 +1,11 @@
+# Many Changes happening. Take these docs with a grain of salt at the moment.
+
+## Todo:
+   [] - Error Handling  - add global error handling for controllers
+   [] - Organize configuration to make it sane.
+   [] - Remove swagger in favor of Scalar
+   [] - More
+   
 # API for Live Information Kiosk
 This API implements the following
  - Loads weather from Open Weather Map and does some pre-formatting
