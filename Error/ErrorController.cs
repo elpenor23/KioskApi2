@@ -8,6 +8,6 @@ namespace KioskApi2.Error;
 public class ErrorController : ControllerBase
 {
 
-    [Route("/error")]
-    public IActionResult HandleError() => Problem();
+	[Route("/error")]
+	public IActionResult HandleError() => Problem();
 }

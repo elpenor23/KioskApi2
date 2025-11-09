@@ -3,31 +3,31 @@ using KioskApi2.DataAccess;
 namespace KioskApi2.IndoorStatus;
 public class IndoorStatusManager(IConfiguration configuration, Serilog.ILogger logger) : IIndoorStatusManager
 {
-    private readonly DatabaseManager dbm = new(configuration);
-    private readonly Serilog.ILogger _logger = logger;
+	private readonly DatabaseManager _dbm = new(configuration);
+	private readonly Serilog.ILogger _logger = logger;
 
-    public async Task<IndoorStatusData> GetIndoorStatus()
-    {
-        _logger.Debug("Getting IndoorStatusData");
-        
-        var statusData = await dbm.GetIndoorStatusData();
-        var data = statusData.Where(x => x.Id == "1").ToList().FirstOrDefault() ?? new IndoorStatusData();
-        return data;
-    }
+	public async Task<IndoorStatusData> GetIndoorStatus()
+	{
+		_logger.Debug("Getting IndoorStatusData");
 
-    public async Task<IndoorStatusData> SaveIndoorStatus(string status)
-    {
-        var threeMinutesAgo = DateTime.Now.AddMinutes(-3);
-        var ReturnData = new IndoorStatusData();
-        var statusData = await dbm.GetIndoorStatusData();
+		var statusData = await _dbm.GetIndoorStatusData();
+		var data = statusData.Where(x => x.Id == "1").ToList().FirstOrDefault() ?? new IndoorStatusData();
+		return data;
+	}
 
-        //get cached data
-        var data = statusData.Where(x => x.Id == "1").ToList().FirstOrDefault() ?? new IndoorStatusData();
-        data.Data = status;
-        data.LastSet = DateTime.Now;
+	public async Task<IndoorStatusData> SaveIndoorStatus(string status)
+	{
+		var threeMinutesAgo = DateTime.Now.AddMinutes(-3);
+		var returnData = new IndoorStatusData();
+		var statusData = await _dbm.GetIndoorStatusData();
 
-        dbm.AddUpdateData(data);
+		//get cached data
+		var data = statusData.Where(x => x.Id == "1").ToList().FirstOrDefault() ?? new IndoorStatusData();
+		data.Data = status;
+		data.LastSet = DateTime.Now;
 
-        return data;
-    }
+		_dbm.AddUpdateData(data);
+
+		return data;
+	}
 }

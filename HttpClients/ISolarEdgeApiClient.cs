@@ -4,5 +4,5 @@ namespace KioskApi2.HttpClients;
 
 public interface ISolarEdgeApiClient
 {
-    Task<SolarData?> GetSolarData();
+	Task<SolarData?> GetSolarData();
 }

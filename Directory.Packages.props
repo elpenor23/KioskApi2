@@ -1,0 +1,26 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
+    <NoWarn>$(NoWarn);NU1507</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="9.0.9" />
+    <PackageVersion Include="Microsoft.Data.Sqlite" Version="9.0.9" />
+    <PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="9.0.9" />
+    <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="9.9.0" />
+    <PackageVersion Include="Scalar.AspNetCore" Version="2.8.11" />
+    <PackageVersion Include="Serilog" Version="4.3.0" />
+    <PackageVersion Include="Serilog.AspNetCore" Version="9.0.0" />
+    <PackageVersion Include="Serilog.Extensions.Hosting" Version="9.0.0" />
+    <PackageVersion Include="Serilog.Extensions.Logging" Version="9.0.2" />
+    <PackageVersion Include="Serilog.Formatting.Compact" Version="3.0.0" />
+    <PackageVersion Include="Serilog.Sinks.Async" Version="2.1.0" />
+    <PackageVersion Include="Serilog.Sinks.Console" Version="6.0.0" />
+    <PackageVersion Include="Serilog.Sinks.Debug" Version="3.0.0" />
+    <PackageVersion Include="Serilog.Sinks.File" Version="7.0.0" />
+    <PackageVersion Include="Serilog.Sinks.Seq" Version="9.0.0" />
+    <PackageVersion Include="Sqlite-net" Version="1.6.292" />
+    <PackageVersion Include="Sqlite-net-pcl" Version="1.9.172" />
+  </ItemGroup>
+</Project>

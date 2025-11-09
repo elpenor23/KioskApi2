@@ -1,9 +1,9 @@
-using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
+using Microsoft.AspNetCore.Mvc;
 
 using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
-using System.Net;
 
 namespace KioskApi2.Weather;
 
@@ -11,32 +11,32 @@ namespace KioskApi2.Weather;
 [ApiController]
 public class WeatherController(Serilog.ILogger logger, IWeatherManager weatherManager) : ControllerBase
 {
-    [HttpGet]
-    [ProducesResponseType((int)HttpStatusCode.NoContent)]
-    [ProducesResponseType(typeof(WeatherItem), (int)HttpStatusCode.OK)]
-    public async Task<IActionResult> Get([FromQuery] string lat, [FromQuery] string lon)
-    {
-        logger.Debug("WeatherController - Getting Weather.");
+	[HttpGet]
+	[ProducesResponseType((int)HttpStatusCode.NoContent)]
+	[ProducesResponseType(typeof(WeatherItem), (int)HttpStatusCode.OK)]
+	public async Task<IActionResult> Get([FromQuery] string lat, [FromQuery] string lon)
+	{
+		logger.Debug("WeatherController - Getting Weather.");
 
-        var data = await weatherManager.GetWeather(lat, lon);
+		var data = await weatherManager.GetWeather(lat, lon);
 
-        logger.Debug(data?.SunriseTime?.ToString() ?? "data sunrise time is null.");
+		logger.Debug(data?.SunriseTime?.ToString() ?? "data sunrise time is null.");
 
-        if (data is null)
-            return NoContent();
+		if (data is null)
+			return NoContent();
 
-        return Ok(data);
-    }
+		return Ok(data);
+	}
 
-    [HttpGet("test/string")]
-    [ProducesResponseType((int)HttpStatusCode.OK)]
-    public async Task<IActionResult> GetTestString([FromQuery] string lat, [FromQuery] string lon)
-    {
-        var x = await weatherManager.GetWeatherTestString(lat, lon);
+	[HttpGet("test/string")]
+	[ProducesResponseType((int)HttpStatusCode.OK)]
+	public async Task<IActionResult> GetTestString([FromQuery] string lat, [FromQuery] string lon)
+	{
+		var x = await weatherManager.GetWeatherTestString(lat, lon);
 
-        if (x is null)
-            return NoContent();
+		if (x is null)
+			return NoContent();
 
-        return Ok(x);
-    }
+		return Ok(x);
+	}
 }

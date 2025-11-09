@@ -5,213 +5,207 @@ namespace KioskApi2.Weather;
 
 public class WeatherItem()
 {
-    const string degree_sign = "°";
+	const string Degree_sign = "°";
 
-    public double? Lat { get; set; }
+	public double? Lat { get; set; }
 
-    public double? Lon { get; set; }
+	public double? Lon { get; set; }
 
-    public DateTime? WeatherTime { get; set; }
-    public string? WeatherTimeFormatted
-    {
-        get
-        {
-            return WeatherTime?.ToString("MM/dd/yyyy HH:mm:ss");
-        }
-    }
-    public double? CurrentTemp { get; set; }
-    public string? CurrentTempFormatted
-    {
-        get
-        {
-            return string.Format("{0}{1}", CurrentTemp.ToString(), degree_sign);
-        }
-    }
-    public double? CurrentDewPoint { get; set; }
-    public double? CurrentFeelsLike { get; set; }
-    public string? CurrentFeelsLikeFormatted
-    {
-        get
-        {
-            return string.Format("{0}{1}", CurrentFeelsLike.ToString(), degree_sign);
-        }
-    }
-    public double? CurrentWindSpeed { get; set; }
-    public string? CurrentIconId { get; set; }
-    public string? CurrentMain { get; set; } //TODO: GIVE THIS A BETTER NAME
-    public double? TodayMinTemp { get; set; }
-    public string? TodayMinTempFormatted
-    {
-        get
-        {
-            return string.Format("{0}{1}", TodayMinTemp.ToString(), degree_sign);
-        }
-    }
-    public double? TodayMaxTemp { get; set; }
-    public string? TodayMaxTempFormatted
-    {
-        get
-        {
-            return string.Format("{0}{1}", TodayMaxTemp.ToString(), degree_sign);
-        }
-    }
-    public string? TodayDescription { get; set; }
-    public string? TodaySummary
-    {
-        get
-        {
-            return string.Format("Today: {0}\n Low: {1} / High: {2}", TodayDescription, TodayMinTemp, TodayMaxTemp);
-        }
-    }
-    public double? TomorrowMinTemp { get; set; }
-    public string? TomorrowMinTempFormatted
-    {
-        get
-        {
-            return string.Format("{0}{1}", TomorrowMinTemp.ToString(), degree_sign);
-        }
-    }
-    public double? TomorrowMaxTemp { get; set; }
-    public string? TomorrowMaxTempFormatted
-    {
-        get
-        {
-            return string.Format("{0}{1}", TomorrowMaxTemp.ToString(), degree_sign);
-        }
-    }
-    public string? TomorrowDescription { get; set; }
-    public string? TomorrowForecast
-    {
-        get
-        {
-            return string.Format("Tomorrow: {0}\nLow: {1} / High: {2}", TomorrowDescription, TomorrowMinTempFormatted, TomorrowMaxTempFormatted);
-        }
-    }
+	public DateTime? WeatherTime { get; set; }
+	public string? WeatherTimeFormatted
+	{
+		get
+		{
+			return WeatherTime?.ToString("MM/dd/yyyy HH:mm:ss");
+		}
+	}
+	public double? CurrentTemp { get; set; }
+	public string? CurrentTempFormatted
+	{
+		get
+		{
+			return string.Format("{0}{1}", CurrentTemp.ToString(), Degree_sign);
+		}
+	}
+	public double? CurrentDewPoint { get; set; }
+	public double? CurrentFeelsLike { get; set; }
+	public string? CurrentFeelsLikeFormatted
+	{
+		get
+		{
+			return string.Format("{0}{1}", CurrentFeelsLike.ToString(), Degree_sign);
+		}
+	}
+	public double? CurrentWindSpeed { get; set; }
+	public string? CurrentIconId { get; set; }
+	public string? CurrentMain { get; set; } //TODO: GIVE THIS A BETTER NAME
+	public double? TodayMinTemp { get; set; }
+	public string? TodayMinTempFormatted
+	{
+		get
+		{
+			return string.Format("{0}{1}", TodayMinTemp.ToString(), Degree_sign);
+		}
+	}
+	public double? TodayMaxTemp { get; set; }
+	public string? TodayMaxTempFormatted
+	{
+		get
+		{
+			return string.Format("{0}{1}", TodayMaxTemp.ToString(), Degree_sign);
+		}
+	}
+	public string? TodayDescription { get; set; }
+	public string? TodaySummary
+	{
+		get
+		{
+			return string.Format("Today: {0}\n Low: {1} / High: {2}", TodayDescription, TodayMinTemp, TodayMaxTemp);
+		}
+	}
+	public double? TomorrowMinTemp { get; set; }
+	public string? TomorrowMinTempFormatted
+	{
+		get
+		{
+			return string.Format("{0}{1}", TomorrowMinTemp.ToString(), Degree_sign);
+		}
+	}
+	public double? TomorrowMaxTemp { get; set; }
+	public string? TomorrowMaxTempFormatted
+	{
+		get
+		{
+			return string.Format("{0}{1}", TomorrowMaxTemp.ToString(), Degree_sign);
+		}
+	}
+	public string? TomorrowDescription { get; set; }
+	public string? TomorrowForecast
+	{
+		get
+		{
+			return string.Format("Tomorrow: {0}\nLow: {1} / High: {2}", TomorrowDescription, TomorrowMinTempFormatted, TomorrowMaxTempFormatted);
+		}
+	}
+	public DateTime? SunriseTime { get; set; }
+	public DateTime? SunsetTime { get; set; }
+	public double? MoonPhase { get; set; }
+	public TimeOfDay TimeOfDay
+	{
+		get
+		{
+			return this.GetTimeOfDay();
+		}
+	}
 
-    public string? Message { get; set; }
-    public string? Status { get; set; }
+	private TimeOfDay GetTimeOfDay()
+	{
+		if (this.WeatherTime == null || this.SunriseTime == null || this.SunsetTime == null)
+		{
+			return TimeOfDay.Unknown;
+		}
 
-    public DateTime? SunriseTime { get; set; }
-    public DateTime? SunsetTime { get; set; }
-    public double? MoonPhase { get; set; }
-    public string? Type { get; set; }
-    public DateTime? LastRefreshed { get; set; }
-    public TimeOfDay TimeOfDay
-    {
-        get
-        {
-            return this.GetTimeOfDay();
-        }
-    }
+		if (IsDawn(this.WeatherTime.Value, this.SunriseTime.Value))
+		{
+			return TimeOfDay.Day;
+		}
+		else if (IsDusk(this.WeatherTime.Value, this.SunsetTime.Value))
+		{
+			return TimeOfDay.Dusk;
+		}
+		else if (IsDay(this.WeatherTime.Value, this.SunriseTime.Value, this.SunsetTime.Value))
+		{
+			return TimeOfDay.Day;
+		}
+		else if (IsNight(this.WeatherTime.Value, this.SunsetTime.Value))
+		{
+			return TimeOfDay.Night;
+		}
+		else
+		{
+			return TimeOfDay.Unknown;
+		}
+	}
 
-    private TimeOfDay GetTimeOfDay()
-    {
-        if (this.WeatherTime == null || this.SunriseTime == null || this.SunsetTime == null)
-        {
-            return TimeOfDay.Unknown;
-        }
+	public static implicit operator WeatherItem(OpenWeatherMap? openWeatherMap)
+	{
+		if (openWeatherMap is null)
+			return new WeatherItem();
 
-        if (isDawn(this.WeatherTime.Value, this.SunriseTime.Value))
-        {
-            return TimeOfDay.Day;
-        }
-        else if (isDusk(this.WeatherTime.Value, this.SunsetTime.Value))
-        {
-            return TimeOfDay.Dusk;
-        }
-        else if (isDay(this.WeatherTime.Value, this.SunriseTime.Value, this.SunsetTime.Value))
-        {
-            return TimeOfDay.Day;
-        }
-        else if (isNight(this.WeatherTime.Value, this.SunsetTime.Value))
-        {
-            return TimeOfDay.Night;
-        }
-        else
-        {
-            return TimeOfDay.Unknown;
-        }
-    }
+		//44.176097, -70.679317
 
-    public static implicit operator WeatherItem(OpenWeatherMap? openWeatherMap)
-    {
-        if (openWeatherMap is null)
-            return new WeatherItem();
+		return new WeatherItem
+		{
+			Lat = openWeatherMap.Lat,
+			Lon = openWeatherMap.Lon,
 
-        //44.176097, -70.679317
+			WeatherTime = ConvertEpochTimeToDateTime(openWeatherMap.Current.Dt),
+			SunriseTime = ConvertEpochTimeToDateTime(openWeatherMap.Current.Sunrise),
+			SunsetTime = ConvertEpochTimeToDateTime(openWeatherMap.Current.Sunset),
 
-        return new WeatherItem
-        {
-            Lat = openWeatherMap.Lat,
-            Lon = openWeatherMap.Lon,
+			CurrentTemp = openWeatherMap.Current.Temp,
+			CurrentDewPoint = openWeatherMap.Current.DewPoint,
+			CurrentWindSpeed = openWeatherMap.Current.WindSpeed,
+			CurrentFeelsLike = openWeatherMap.Current.FeelsLike,
+			CurrentIconId = openWeatherMap.Current.Weather[0].Icon,
+			CurrentMain = openWeatherMap.Current.Weather[0].Main,
 
-            WeatherTime = ConvertEpochTimeToDateTime(openWeatherMap.Current.Dt),
-            SunriseTime = ConvertEpochTimeToDateTime(openWeatherMap.Current.Sunrise),
-            SunsetTime = ConvertEpochTimeToDateTime(openWeatherMap.Current.Sunset),
+			TodayMaxTemp = openWeatherMap.Daily[0].Temp.Max,
+			TodayMinTemp = openWeatherMap.Daily[0].Temp.Min,
+			TodayDescription = openWeatherMap.Daily[0].Summary,
 
-            CurrentTemp = openWeatherMap.Current.Temp,
-            CurrentDewPoint = openWeatherMap.Current.DewPoint,
-            CurrentWindSpeed = openWeatherMap.Current.WindSpeed,
-            CurrentFeelsLike = openWeatherMap.Current.FeelsLike,
-            CurrentIconId = openWeatherMap.Current.Weather[0].Icon,
-            CurrentMain = openWeatherMap.Current.Weather[0].Main,
+			TomorrowMaxTemp = openWeatherMap.Daily[1].Temp.Max,
+			TomorrowMinTemp = openWeatherMap.Daily[1].Temp.Min,
+			TomorrowDescription = openWeatherMap.Daily[1].Summary,
 
-            TodayMaxTemp = openWeatherMap.Daily[0].Temp.Max,
-            TodayMinTemp = openWeatherMap.Daily[0].Temp.Min,
-            TodayDescription = openWeatherMap.Daily[0].Summary,
+			MoonPhase = openWeatherMap.Daily[0].MoonPhase,
+		};
+	}
 
-            TomorrowMaxTemp = openWeatherMap.Daily[1].Temp.Max,
-            TomorrowMinTemp = openWeatherMap.Daily[1].Temp.Min,
-            TomorrowDescription = openWeatherMap.Daily[1].Summary,
+	private static decimal ConvertDoubleToDecimal(double dbl, int numDecimalPoints = 2)
+	{
+		return decimal.Round(Convert.ToDecimal(dbl), numDecimalPoints);
+	}
 
-            MoonPhase = openWeatherMap.Daily[0].MoonPhase,
-        };
-    }
+	private static DateTime ConvertEpochTimeToDateTime(Int64 timestamp)
+	{
+		var dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(timestamp);
 
-    private static decimal ConvertDoubleToDecimal(double dbl, int numDecimalPoints = 2)
-    {
-        return decimal.Round(Convert.ToDecimal(dbl), numDecimalPoints);
-    }
+		var dateTime = dateTimeOffset.DateTime;
 
-    private static DateTime ConvertEpochTimeToDateTime(Int64 timestamp)
-    {
-        var dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(timestamp);
+		var localTime = dateTime.ToLocalTime();
 
-        var dateTime = dateTimeOffset.DateTime;
+		return localTime;
+	}
 
-        var localTime = dateTime.ToLocalTime();
+	private static bool IsDay(DateTime currentTime, DateTime sunRiseTime, DateTime sunSetTime)
+	{
+		return sunRiseTime <= currentTime && currentTime <= sunSetTime;
+	}
 
-        return localTime;
-    }
+	private static bool IsDawn(DateTime currentTime, DateTime sunRiseTime)
+	{
+		var thirtyMinutesBeforeSunrise = sunRiseTime.AddMinutes(-30);
+		var thirtyMinutesAfterSunrise = sunRiseTime.AddMinutes(30);
 
-    private static bool isDay(DateTime currentTime, DateTime sunRiseTime, DateTime sunSetTime)
-    {
-        return sunRiseTime <= currentTime && currentTime <= sunSetTime;
-    }
+		return thirtyMinutesBeforeSunrise <= currentTime && currentTime <= thirtyMinutesAfterSunrise;
+	}
 
-    private static bool isDawn(DateTime currentTime, DateTime sunRiseTime)
-    {
-        var thirtyMinutesBeforeSunrise = sunRiseTime.AddMinutes(-30);
-        var thirtyMinutesAfterSunrise = sunRiseTime.AddMinutes(30);
+	private static bool IsDusk(DateTime currentTime, DateTime sunSetTime)
+	{
+		var thirtyMinutesBeforeSunset = sunSetTime.AddMinutes(-30);
+		var thirtyMinutesAfterSunset = sunSetTime.AddMinutes(30);
 
-        return thirtyMinutesBeforeSunrise <= currentTime && currentTime <= thirtyMinutesAfterSunrise;
-    }
+		return thirtyMinutesBeforeSunset <= currentTime && currentTime <= thirtyMinutesAfterSunset;
+	}
 
-    private static bool isDusk(DateTime currentTime, DateTime sunSetTime)
-    {
-        var thirtyMinutesBeforeSunset = sunSetTime.AddMinutes(-30);
-        var thirtyMinutesAfterSunset = sunSetTime.AddMinutes(30);
+	private static bool IsNight(DateTime currentTime, DateTime sunSetTime)
+	{
+		return currentTime >= sunSetTime;
+	}
 
-        return thirtyMinutesBeforeSunset <= currentTime && currentTime <= thirtyMinutesAfterSunset;
-    }
-
-    private static bool isNight(DateTime currentTime, DateTime sunSetTime)
-    {
-        return currentTime >= sunSetTime;
-    }
-
-    public static implicit operator HttpContent(WeatherItem v)
-    {
-        throw new NotImplementedException();
-    }
+	public static implicit operator HttpContent(WeatherItem v)
+	{
+		throw new NotImplementedException();
+	}
 }

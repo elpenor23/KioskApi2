@@ -7,24 +7,24 @@ namespace KioskApi2.IndoorStatus;
 [ApiController]
 public class IndoorStatusController(IIndoorStatusManager indoorStatusManager, Serilog.ILogger logger) : ControllerBase
 {
-    [HttpGet]
-    public async Task<ActionResult<IndoorStatusData>> Get()
-    {
-        logger.Debug("IndoorStatusController - Getting Indoor Status");
+	[HttpGet]
+	public async Task<ActionResult<IndoorStatusData>> Get()
+	{
+		logger.Debug("IndoorStatusController - Getting Indoor Status");
 
-        var data = await indoorStatusManager.GetIndoorStatus();
+		var data = await indoorStatusManager.GetIndoorStatus();
 
-        return Ok(data);
+		return Ok(data);
 
-    }
+	}
 
-    [HttpPost]
-    public async Task<ActionResult<IndoorStatusData>> Post([FromBody] string status)
-    {
-        logger.Debug("IndoorStatusController - Posting Indoor Status");
+	[HttpPost]
+	public async Task<ActionResult<IndoorStatusData>> Post([FromBody] string status)
+	{
+		logger.Debug("IndoorStatusController - Posting Indoor Status");
 
-        var data = await indoorStatusManager.SaveIndoorStatus(status);
+		var data = await indoorStatusManager.SaveIndoorStatus(status);
 
-        return Ok(data);
-    }
+		return Ok(data);
+	}
 }

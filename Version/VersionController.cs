@@ -6,20 +6,20 @@ namespace KioskApi2.Version;
 [ApiController]
 public class VersionController : ControllerBase
 {
-    [HttpGet]
-    public async Task<ActionResult<Version>> Get()
-    {
-        var v = await Task.Run(() =>
-            new Version
-            {
-                version = "v3.0"
-            });
+	[HttpGet]
+	public async Task<ActionResult<Version>> Get()
+	{
+		var v = await Task.Run(() =>
+			new Version
+			{
+				version = "v3.0"
+			});
 
 
-        return Ok(v);
-    }
+		return Ok(v);
+	}
 }
 public class Version
 {
-    public string? version { get; set; }
+	public string? version { get; set; }
 }

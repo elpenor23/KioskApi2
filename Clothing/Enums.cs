@@ -2,31 +2,31 @@ namespace KioskApi2.Enums;
 
 public enum TimeOfDay
 {
-    Dawn,
-    Dusk,
-    Day,
-    Night,
-    Unknown
+	Dawn,
+	Dusk,
+	Day,
+	Night,
+	Unknown
 }
 public enum WindType
 {
-    None,
-    Light,
-    Medium,
-    Heavy
+	None,
+	Light,
+	Medium,
+	Heavy
 }
 public enum Intensity
 {
-    Race,
-    Workout,
-    Long,
-    Normal,
-    Easy
+	Race,
+	Workout,
+	Long,
+	Normal,
+	Easy
 
 }
 public enum Feel
 {
-    None,
-    Cool,
-    Warm
+	None,
+	Cool,
+	Warm
 }

@@ -1,18 +1,18 @@
 
 namespace KioskApi2.Clothing
 {
-    public interface IClothingManager
-    {
-        Task<IEnumerable<PersonsClothing>> GetCalculatedClothing(
-        string feels,
-        string ids,
-        string names,
-        string colors,
-        string lat,
-        string lon);
+	public interface IClothingManager
+	{
+		Task<IEnumerable<PersonsClothing>> GetCalculatedClothing(
+		string feels,
+		string ids,
+		string names,
+		string colors,
+		string lat,
+		string lon);
 
-        List<string> GetBodyParts();
+		List<string> GetBodyParts();
 
-        Clothing GetClothing();
-    }
+		Clothing GetClothing();
+	}
 }
