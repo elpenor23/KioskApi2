@@ -10,6 +10,7 @@ public class OpenWeatherMapApiOptions : ApiOptions
 public class OpenWeatherMapApiEndPoints
 {
 	public required string OneCall3 { get; set; }
+	public required string HealthCheck { get; set; }
 }
 
 public class OpenWeatherMapApiQueryStringData

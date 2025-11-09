@@ -11,6 +11,7 @@ public class SolarEdgeApiOptions : ApiOptions
 public class SolarEdgeApiEndPoints
 {
 	public required string SiteOverView { get; set; }
+	public required string HealthCheck { get; set; }
 }
 
 public class SolarEdgeApiQueryStringData

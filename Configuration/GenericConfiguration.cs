@@ -12,6 +12,7 @@ public static class GenericConfiguration
 
 		builder.Services.AddEndpointsApiExplorer();
 		builder.Services.AddOpenApi();
+		
 		return builder;
 	}
 }

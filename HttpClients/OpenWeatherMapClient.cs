@@ -31,6 +31,18 @@ public class OpenWeatherMapClient(HttpClient httpClient, IOptions<OpenWeatherMap
 
 		return x;
 	}
+
+	public async Task HealthCheck()
+	{
+		decimal lat = 44.176097m;
+		decimal lon = -70.679317m;
+		var endpoint = GetOneCall3EndPoint(lat, lon);
+
+		logger.Information("Endpoint: {endpoint}", endpoint);
+
+		await GetAsyncString(endpoint);
+	}
+
 	private string GetOneCall3EndPoint(decimal lat, decimal lon)
 	{
 		var queryStringData = _options?.QueryStringData ?? throw new Exception("Incomplete Open Weather Map API Configuration: QueryStringData");

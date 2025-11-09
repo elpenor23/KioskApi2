@@ -22,6 +22,15 @@ public class SolarEdgeApiClient(HttpClient httpClient, IOptions<SolarEdgeApiOpti
 		return x;
 	}
 
+	public async Task HealthCheck()
+	{
+		var endPoint = GetSiteOverViewEndPoint();
+
+		logger.Information("Solar endpoint: {endpoint}", endPoint);
+
+		await GetAsync<SolarData>(endPoint);
+	}
+
 	private string GetSiteOverViewEndPoint()
 	{
 		var queryStringData = _options?.QueryStringData ?? throw new Exception("Incomplete Open Weather Map API Configuration: QueryStringData");

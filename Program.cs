@@ -10,12 +10,11 @@ var builder = WebApplication.CreateBuilder(args)
 	.ConfigureServices()
 	.ConfigureOptions()
 	.ConfigureManagers()
-	.ConfigureHttpClients();
+	.ConfigureHttpClients()
+	.ConfigureHealthChecks();
 
 builder.Services.AddCors(options => options.AddPolicy(name: allowAllCORS,
 		policy => policy.WithOrigins("*")));
-
-builder.ConfigureHttpClients();
 
 var app = builder.Build();
 
@@ -30,6 +29,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseSerilogRequestLogging();
+
+app.AddHeathChecks();
 
 app.UseHttpsRedirection();
 app.UseCors(allowAllCORS);
